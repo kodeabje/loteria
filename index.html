@@ -13,31 +13,26 @@
             background-color: white;
         }
 
-        #cardContainer  {
-            max-height: 100vh;
-            max-width: 100vw;
-            position:relative;
-            display:inline-block;
-            border:1px solid black;
-        }
-
         #card {
             max-height: 90vh;
             max-width: 100vw;
             cursor: pointer;
             object-fit: contain;
             width: 100%; /* Make the card fill the container */
+            /*border:5px solid red;*/
         }
 
         #loteriaButton {
-            max-height: 20vh;
-            width: 50%;
+            /*border:5px solid blue;*/
+            height: 10vh;
+            width: 100vw;
+            object-fit: contain;
             position: absolute; /* Fixed position */
-            bottom: 20px; /* 20px from the bottom */
+            bottom: 0; /* 20px from the bottom */
             left: 50%; /* Center horizontally */
             transform: translateX(-50%); /* Adjust horizontal centering */
             padding: 10px 20px; /* Padding for the button */
-            font-size: 20px; /* Font size of the button text */
+            font-size: 5vh; /* Font size of the button text */
             cursor: pointer; /* Cursor pointer on hover */
       }
 
@@ -45,12 +40,11 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-    <div id="cardContainer " >
+
         <img src="cards/0.jpg" alt="Lotería card" id="card">
         <button id="loteriaButton">¡Loteria!</button>
-    </div>
 
-    <script>
+<script>
         document.addEventListener('DOMContentLoaded', () => {
             const loteriaCards = [
                 "1 el gallo", "2 el diablito", "3 la dama", "4 el catrin", "5 el paraguas",
