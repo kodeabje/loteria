@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loter&iacute;a Mexicana</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+        }
+
+        #cardContainer  {
+            max-height: 100vh;
+            max-width: 100vw;
+            position:relative;
+            display:inline-block;
+            border:1px solid black;
+        }
+
+        #card {
+            max-height: 90vh;
+            max-width: 100vw;
+            cursor: pointer;
+            object-fit: contain;
+            width: 100%; /* Make the card fill the container */
+        }
+
+        #loteriaButton {
+            max-height: 20vh;
+            width: 50%;
+            position: absolute; /* Fixed position */
+            bottom: 20px; /* 20px from the bottom */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Adjust horizontal centering */
+            padding: 10px 20px; /* Padding for the button */
+            font-size: 20px; /* Font size of the button text */
+            cursor: pointer; /* Cursor pointer on hover */
+      }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div id="cardContainer " >
+        <img src="cards/0.jpg" alt="Lotería card" id="card">
+        <button id="loteriaButton">¡Loteria!</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loteriaCards = [
+                "1 el gallo", "2 el diablito", "3 la dama", "4 el catrin", "5 el paraguas",
+                "6 la sirena", "7 la escalera", "8 la botella", "9 barril", "10 arbol",
+                // ... more card names ...
+                "54 la rana"
+            ];
+
+            let shownCards = new Set();
+            const cardElement = document.getElementById('card');
+            let gameEnded = false;
+
+            function playSound(randomCard) {
+                const audio = new Audio(`audio/${randomCard}.mp3`);
+                audio.play().catch(e => console.error("Error playing audio:", e));
+            }
+
+            function getRandomCard() {
+                if (loteriaCards.length === 0) {
+                    return null;
+                }
+                const randomIndex = Math.floor(Math.random() * loteriaCards.length);
+                return loteriaCards.splice(randomIndex, 1)[0];
+            }
+
+            function resetGame() {
+                loteriaCards.push(...shownCards);
+                shownCards.clear();
+                gameEnded = false;
+                cardElement.src = `cards/0.jpg`;
+            }
+
+            function handleCardInteraction() {
+                if (gameEnded) {
+                    resetGame();
+                    return;
+                }
+
+                const randomCard = getRandomCard();
+                if (randomCard) {
+                    shownCards.add(randomCard);
+                    cardElement.src = `cards/${randomCard}.jpg`;
+                    playSound(randomCard); // Play sound for the card
+                } else {
+                    cardElement.src = `cards/99.svg`;
+                    gameEnded = true;
+                    triggerConfetti();
+                }
+            }
+
+            cardElement.addEventListener('click', handleCardInteraction);
+
+            document.addEventListener('keydown', (event) => {
+                if ((event.key === 'Enter' || event.key === ' ') && document.activeElement !== loteriaButton) {
+                    handleCardInteraction();
+                }
+            });
+
+            function triggerConfetti() {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+ 
+            function playWinSound() {
+                const winAudio = new Audio('audio/win.wav');
+                winAudio.play().catch(e => console.error('Error playing win sound:', e));
+            }
+
+            const loteriaButton = document.getElementById('loteriaButton');
+                loteriaButton.addEventListener('click', () => {
+                    if (!gameEnded) {
+                        triggerConfetti();
+                        playWinSound(); // Corrected this line to directly call playWinSound
+                        gameEnded = true;
+                        setTimeout(resetGame, 3000); // Resets the game after 3 seconds
+                    }
+            });
+
+        });
+    </script>
+</body>
+</html>
