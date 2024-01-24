@@ -52,13 +52,19 @@
             font-size:1em;
         }
 
+        /* Media query for smaller screens (e.g., mobile devices) */
+        @media screen and (max-width: 600px) {
+            .instructionContent {
+                font-size: 1.2em; /* Larger font size for better readability on small screens */
+            }
+        }
+
         #startButton {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 1em;
             cursor: pointer;
         }     
-        
         
         #container {
             height: 100%;
@@ -77,6 +83,9 @@
             cursor: pointer;
             object-fit: contain;
             margin: 2vw; /* Responsive margin */
+            outline:none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         #loteriaButton {
