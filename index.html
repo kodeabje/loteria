@@ -13,8 +13,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+        }
+
+        #bgImage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background-image: url('cards/0.jpg');
             background-repeat: repeat;
+            opacity: 0.5; /* Adjust the opacity as needed */
+            z-index: -1; /* Keeps the background behind the content */
         }
 
         #instructionOverlay {
@@ -37,6 +48,8 @@
             max-width: 80%; /* Adjust as needed */
             max-height: 80%; /* Adjust as needed */
             overflow-y: auto; /* Allows scrolling within the content if needed */
+            font-family: Arial, Helvetica, sans-serif;
+            font-size:1em;
         }
 
         #startButton {
@@ -49,7 +62,8 @@
         
         #container {
             height: 100%;
-            width: 100%;
+            width: 95%;
+            max-width: 600px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -59,7 +73,7 @@
 
         #card {
             height: calc(85% - 4vw); /* Subtracting margin from total height */
-            width: 95%; /* Adjust width */
+            width: 100%; /* Adjust width */
             cursor: pointer;
             object-fit: contain;
             margin: 2vw; /* Responsive margin */
@@ -67,7 +81,7 @@
 
         #loteriaButton {
             height: calc(15% - 4vw); /* Subtracting margin from total height */
-            width: 95%; /* Adjust width */
+            width: 100%; /* Adjust width */
             padding: 10px 20px;
             font-size: 4vh;
             cursor: pointer;
@@ -76,24 +90,17 @@
             display: none;
         }
 
-        /* Media query for larger screens */
-        @media (min-width: 768px) {
-            #loteriaButton {
-                height: 50px; /* Fixed height for larger screens */
-                font-size:100%;
-            }
-        }
-
     </style>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body>
-
+    <div id="bgImage"></div>
     <div id="instructionOverlay">
         <div class="instructionContent">
-            <p>Instructions go here...</p>
-            <button id="startButton">Listo</button>
+            <h3>&Aacute;ndale, &aacute;ndale, &aacute;ndale, que va a empezar la Loter&iacute;a.</h3>
+            <p>Cuando alguien grite <i>¡Loter&iacute;a!</i> da click en el botón para empezar otra vez.</p>
+            <button id="startButton">As&iacute; que se va y corre con...</button>
         </div>
     </div>
 
@@ -139,12 +146,16 @@
                 }
             });
 
+            cardElement.addEventListener('click', handleCardInteraction);
+
             loteriaButton.addEventListener('click', () => {
                 if (!gameEnded) {
                     triggerConfetti();
                     playWinSound();
                     gameEnded = true;
-                    setTimeout(resetGame, 3000);
+                    setTimeout(() => {
+                        window.location.reload(); // Reloads the current page
+                    }, 3000); // Wait for 3 seconds before reloading
                 }
             });
 
@@ -192,7 +203,14 @@
                 loteriaCards.push(...shownCards);
                 shownCards.clear();
                 gameEnded = false;
-                cardElement.src = `cards/0.jpg`;
+                gameStarted = false;
+                
+                // Reset the card to an initial state if needed
+                // cardElement.src = 'path/to/initial/card/image.jpg'; // Optional
+
+                // Show the instruction overlay again
+                instructionOverlay.style.display = 'block';
+                loteriaButton.style.display = 'none'; // Hide the Loteria button
             }
 
             function triggerConfetti() {
