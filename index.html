@@ -6,13 +6,12 @@
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%; /* Use 100% instead of 100vh which can be problematic on mobile */
+            height: 100%;
             width: 100%;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: white;
         }
 
         #container {
@@ -26,13 +25,14 @@
 
         #card {
             height: 85%;
-            width: 100%; /* Adjust width to ensure it's responsive */
+            max-width: 90%;
             cursor: pointer;
             object-fit: contain;
         }
 
         #loteriaButton {
-            height: 15%;
+            height: 10%;
+            max-width: 90%;
             width: 100%; /* Full width for better visibility */
             padding: 10px 20px;
             font-size: 4vh; /* Adjust font size for mobile */
