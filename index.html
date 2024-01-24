@@ -66,13 +66,14 @@
         }
 
         #loteriaButton {
-            height: calc(10% - 4vw); /* Subtracting margin from total height */
+            height: calc(15% - 4vw); /* Subtracting margin from total height */
             width: 95%; /* Adjust width */
             padding: 10px 20px;
             font-size: 4vh;
             cursor: pointer;
             box-sizing: border-box;
             margin: 2vw; /* Responsive margin */
+            display: none;
         }
 
         /* Media query for larger screens */
@@ -127,9 +128,20 @@
             ];
 
             let shownCards = new Set();
-            //const cardElement = document.getElementById('card');
             let gameEnded = false;
 
+            function startGame() {
+                if (!gameEnded) {
+                    instructionOverlay.style.display = 'none';
+                    handleCardInteraction();
+                    gameEnded = true;
+
+                    // Show the Loteria button
+                    const loteriaButton = document.getElementById('loteriaButton');
+                    loteriaButton.style.display = 'block'; // Or 'inline-block' as per your layout
+                }
+            }
+            
             function playSound(randomCard) {
                 const audio = new Audio(`audio/${randomCard}.mp3`);
                 audio.play().catch(e => console.error("Error playing audio:", e));
@@ -170,9 +182,11 @@
 
             cardElement.addEventListener('click', handleCardInteraction);
 
+            startButton.addEventListener('click', startGame);
+
             document.addEventListener('keydown', (event) => {
                 if ((event.key === 'Enter' || event.key === ' ') && document.activeElement !== loteriaButton) {
-                    handleCardInteraction();
+                    startGame();
                 }
             });
 
