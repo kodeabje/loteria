@@ -140,6 +140,7 @@
             let shownCards = new Set();
             let gameStarted = false;
             let gameEnded = false;
+            let currentAudio = null;
 
             const cardElement = document.getElementById('card');
             const startButton = document.getElementById('startButton');
@@ -186,7 +187,7 @@
                     return;
                 }
 
-                const randomCard = getRandomCard();
+            const randomCard = getRandomCard();
                 if (randomCard) {
                     shownCards.add(randomCard);
                     cardElement.src = `cards/${randomCard}.jpg`;
@@ -207,8 +208,15 @@
             }
 
             function playSound(randomCard) {
-                const audio = new Audio(`audio/${randomCard}.mp3`);
-                audio.play().catch(e => console.error("Error playing audio:", e));
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                }
+
+                setTimeout(() => {
+                    currentAudio = new Audio(`audio/${randomCard}.mp3`);
+                    currentAudio.play().catch(e => console.error("Error playing audio:", e));
+                }, 250); // Delay of 1000 milliseconds (1 second)
             }
 
             function resetGame() {
