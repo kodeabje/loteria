@@ -6,8 +6,8 @@
         body, html {
             margin: 0;
             padding: 0;
-            height: 100vh; /* Ensure full viewport height */
-            width: 100vw; /* Ensure full viewport width */
+            height: 100%; /* Use 100% instead of 100vh which can be problematic on mobile */
+            width: 100%;
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -16,30 +16,30 @@
         }
 
         #container {
-            height: 100vh;
-            width: 100vw;
-            border: 3px solid red;
+            height: 100%; /* Full height of the parent */
+            width: 100%; /* Full width of the parent */
             display: flex;
-            flex-direction: column; /* Stack children vertically */
-            align-items: center; /* Center children horizontally */
-            justify-content: center; /* Center children vertically */
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between; /* Adjust spacing */
         }
 
         #card {
-            height: 85%; /* 85% of the container's height */
-            width: 100%; /* Full width of the container */
+            height: 85%;
+            width: 100%; /* Adjust width to ensure it's responsive */
             cursor: pointer;
             object-fit: contain;
-            margin-bottom: 10px; /* Space between the image and the button */
         }
 
         #loteriaButton {
-            height: 15%; /* 15% of the container's height */
-            width: 100%; /* Full width of the container */
+            height: 15%;
+            width: 100%; /* Full width for better visibility */
             padding: 10px 20px;
-            font-size: 5vh;
+            font-size: 4vh; /* Adjust font size for mobile */
             cursor: pointer;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
         }
+
     </style>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 </head>
