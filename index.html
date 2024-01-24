@@ -6,6 +6,8 @@
         body, html {
             margin: 0;
             padding: 0;
+            height: 100vh; /* Ensure full viewport height */
+            width: 100vw; /* Ensure full viewport width */
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -14,8 +16,8 @@
         }
 
         #container {
-            max-height: 100vh;
-            max-width: 100vw;
+            height: 100vh;
+            width: 100vw;
             border: 3px solid red;
             display: flex;
             flex-direction: column; /* Stack children vertically */
@@ -24,24 +26,20 @@
         }
 
         #card {
-            max-height: 85vh;
-            max-width: 100%; /* Adjust width to the container's width */
+            height: 85%; /* 85% of the container's height */
+            width: 100%; /* Full width of the container */
             cursor: pointer;
             object-fit: contain;
-            width: auto; /* Adjust width automatically */
             margin-bottom: 10px; /* Space between the image and the button */
         }
 
         #loteriaButton {
-            height: 15vh;
-            width: auto; /* Adjust width as needed */
+            height: 15%; /* 15% of the container's height */
+            width: 100%; /* Full width of the container */
             padding: 10px 20px;
             font-size: 5vh;
             cursor: pointer;
-            align-self: stretch; /* Stretch button width to container's width */
         }
-
-
     </style>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 </head>
